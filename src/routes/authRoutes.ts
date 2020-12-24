@@ -14,17 +14,6 @@ const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
 };
 
 module.exports = Router()
-  .post('/login', (req: RequestWithBody, res: Response) => {
-    const { email, password } = req.body;
-    
-    if(email && password && email === 'hi@bye.com' && password === 'trees'){
-      req.session = { loggedIn: true };
-      res.redirect('/');
-    } else {
-      res.send('You must provide email and password');
-    }
-  })
-
   .get('/logout', (req: RequestWithBody, res: Response) => {
     req.session = undefined;
     res.redirect('/');

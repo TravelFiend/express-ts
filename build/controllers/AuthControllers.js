@@ -10,23 +10,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var decorators_1 = require("./decorators");
-function logger(req, res, next) {
-    console.log('Request was made');
-    next();
-}
 var AuthController = /** @class */ (function () {
     function AuthController() {
     }
     AuthController.prototype.getLogin = function (req, res) {
         res.send("\n    <form method='POST'>\n      <div>\n        <label>Email</label>\n        <input type='text' name='email' />\n      </div>\n\n      <div>\n        <label>Password</label>\n        <input type='password' name='password' />\n      </div>\n\n      <button>Submit</button>\n    </form>\n    ");
     };
+    AuthController.prototype.postLogin = function (req, res) {
+        var _a = req.body, email = _a.email, password = _a.password;
+        if (email && password && email === 'hi@bye.com' && password === 'trees') {
+            req.session = { loggedIn: true };
+            res.redirect('/');
+        }
+        else {
+            res.send('You must provide email and password');
+        }
+    };
     __decorate([
         decorators_1.get('/login'),
-        decorators_1.use(logger),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], AuthController.prototype, "getLogin", null);
+    __decorate([
+        decorators_1.post('/login'),
+        decorators_1.bodyValidator('email', 'password'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", void 0)
+    ], AuthController.prototype, "postLogin", null);
     AuthController = __decorate([
         decorators_1.controller('/auth')
     ], AuthController);

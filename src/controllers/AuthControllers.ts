@@ -1,15 +1,9 @@
-import { NextFunction, Request, Response } from 'express';
-import { get, controller, use } from './decorators';
-
-function logger(req: Request, res: Response, next: NextFunction){
-  console.log('Request was made');
-  next();
-}
+import { Request, Response } from 'express';
+import { get, controller, bodyValidator, post } from './decorators';
 
 @controller('/auth')
 class AuthController {
   @get('/login')
-  @use(logger)
   getLogin(req: Request, res: Response): void {
     res.send(`
     <form method='POST'>
@@ -26,5 +20,18 @@ class AuthController {
       <button>Submit</button>
     </form>
     `)
+  }
+
+  @post('/login')
+  @bodyValidator('email', 'password')
+  postLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    if (email && password && email === 'hi@bye.com' && password === 'trees') {
+      req.session = { loggedIn: true };
+      res.redirect('/');
+    } else {
+      res.send('You must provide email and password');
+    }
   }
 }
