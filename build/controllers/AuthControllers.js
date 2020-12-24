@@ -26,6 +26,10 @@ var AuthController = /** @class */ (function () {
             res.send('You must provide email and password');
         }
     };
+    AuthController.prototype.getLogout = function (req, res) {
+        req.session = undefined;
+        res.redirect('/');
+    };
     __decorate([
         decorators_1.get('/login'),
         __metadata("design:type", Function),
@@ -39,6 +43,12 @@ var AuthController = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], AuthController.prototype, "postLogin", null);
+    __decorate([
+        decorators_1.get('/logout'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", void 0)
+    ], AuthController.prototype, "getLogout", null);
     AuthController = __decorate([
         decorators_1.controller('/auth')
     ], AuthController);

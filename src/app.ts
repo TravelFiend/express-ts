@@ -2,6 +2,7 @@ import express from 'express';
 import cookieSession from 'cookie-session';
 import { AppRouter } from './appRouter';
 import './controllers/AuthControllers';
+import './controllers/RootContoller';
 
 const app = express();
 
